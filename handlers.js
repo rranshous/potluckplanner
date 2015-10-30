@@ -12,7 +12,7 @@ exports.get_event = function(event, context) {
   solecist.get(id,
     function(data) {
       console.log('got data', data);
-      context.succeed(JSON.stringify(data));
+      context.succeed(data);
     },
     function(arg) {
       console.log('failure getting data', arg);
