@@ -2,16 +2,7 @@ console.log('Loading solecist');
 
 var httpreq = require('./httpreq.js')
 
-var view_schema = {
-  'VERSION': 1,
-  'name': 'NEW',
-  'id': 'NEW',
-  'description': 'NEW'
-};
-
-var hostname = "event-solecist.forebodingflavor.com";
-
-exports.set = function(entity_id, data, succeed, fail) {
+exports.set = function(hostname, view_schema, entity_id, data, succeed, fail) {
   console.log('setting', entity_id, data);
   var metadata = {};
   var post_data = {
@@ -34,7 +25,7 @@ exports.set = function(entity_id, data, succeed, fail) {
   console.log('done with set');
 }
 
-exports.get = function(entity_id, succeed, fail) {
+exports.get = function(hostname, view_schema, entity_id, succeed, fail) {
   var options = {
     hostname: hostname,
     port: 80,

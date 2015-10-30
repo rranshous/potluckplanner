@@ -3,7 +3,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
   <script id="page_template" type="text/x-handlebars-template">
 
-    <form method="POST" action="/update_event_details">
+    <form method="POST" action="/upsert_event_details">
       <label>Event Name:
         <input type="text" name="name" value="{{event.name}}"></label>
       <label>Description:
@@ -15,7 +15,7 @@
 
     <div id="tasks">
       {{#each tasks}}
-      <form method="POST" action="/update_task_details">
+      <form method="POST" action="/upsert_task_details">
         <label>Name:
           <input type="text" name="name" value="{{name}}"/></label>
         <label>Description:

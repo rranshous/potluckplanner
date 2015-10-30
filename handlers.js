@@ -1,6 +1,7 @@
 console.log("Loading handlers");
 
-var solecist = require('./solecist.js');
+var event = require('./event.js');
+var task = require('./task.js');
 
 exports.get_event = function(event, context) {
   console.log('GET EVENT Received event:',
@@ -9,7 +10,7 @@ exports.get_event = function(event, context) {
 
   var id = event.id;
   console.log('requesting data', id);
-  solecist.get(id,
+  event.get(id,
     function(data) {
       console.log('got data', data);
       context.succeed(data);
@@ -28,7 +29,7 @@ exports.update_event = function(event, context) {
 
   var id = event.id;
   console.log('setting data', id, event);
-  solecist.set(id, event,
+  event.set(id, event,
     function(data) {
       console.log('got response', data);
       context.succeed();
@@ -47,7 +48,7 @@ exports.create_event = function(event, context) {
 
   var id = event.id;
   console.log('setting data', id, event);
-  solecist.set(id, event,
+  event.set(id, event,
     function(data) {
       console.log('got response', data);
       context.succeed();

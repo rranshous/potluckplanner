@@ -22,3 +22,6 @@ cname seems like it might be an answer
 could do anything in the URL really, especially if i'm targeting single page
 
 security through obscurity =] craigslist style
+
+turns out lambda isn't good for returning html, just data
+will need a serving source other than lambda for pages
