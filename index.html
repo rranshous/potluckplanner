@@ -1,0 +1,49 @@
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+  <script id="page_template" type="text/x-handlebars-template">
+
+    <form method="POST" action="/update_event_details">
+      <label>Event Name:
+        <input type="text" name="name" value="{{event.name}}"></label>
+      <label>Description:
+        <input type="text" name="description" value="{{event.description}}"></label>
+      <label>Start Time:
+        <input type="text" name="start_time" value="{{event.start_time}}"></label>
+      <input type="hidden" name="id" value="{{event.id}}"/>
+    </form>
+
+    <div id="tasks">
+      {{#each tasks}}
+      <form method="POST" action="/update_task_details">
+        <label>Name:
+          <input type="text" name="name" value="{{name}}"/></label>
+        <label>Description:
+          <input type="text" name="description" value="{{description}}"/></label>
+        <input type="hidden" name="id" value="{{id}}"/>
+      </form>
+      {{/each}}
+    </div>
+
+  </script>
+  <script>
+    var hard_context = {
+      event: { name: 'e1', start_time: 'et1', id: '321', description: 'd1' },
+      tasks: [
+        { name: 't1', description: 'd1', id: '123' }
+      ]
+    };
+
+    function setupPage(context) {
+      var source   = $("#page_template").html();
+      var template = Handlebars.compile(source);
+      var html = template(context);
+      console.log("rendering html");
+      $("#content").html(html);
+    };
+    $(window).load(function(){setupPage(hard_context);});
+  </script>
+</head>
+<body>
+  <div id="content"> </div>
+</body>

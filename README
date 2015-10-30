@@ -1,0 +1,24 @@
+help plan events where people are bringing
+things
+
+helps user orchestrate the items being brought
+
+expected features:
+ describe event
+ sign people up to bring / do something, including expected place / time
+ people have interface to organizers expectations for them
+ they can leave feedback, set eta, etc
+ push notifications for quick communication
+
+implimentation
+
+it would be convenient if the site could be made more
+simple by having each use have their own "site"
+
+i'm looking at using aws lambda targeting serverless for the frontend
+redis style backend namespaced, somehow embed the unique name
+for the site in all it's interacts w/ the server.
+cname seems like it might be an answer
+could do anything in the URL really, especially if i'm targeting single page
+
+security through obscurity =] craigslist style
