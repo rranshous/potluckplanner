@@ -1,7 +1,12 @@
 console.log("Loading handlers");
 
-var event = require('./event.js');
-var task = require('./task.js');
+var event_client = require('./event.js');
+var task_client = require('./task.js');
+var fs = require('fs');
+
+exports.get_root_html = function(event, context) {
+  context.succeed({body:fs.readFileSync('./index.html', 'utf8')});
+};
 
 exports.get_event = function(event, context) {
   console.log('GET EVENT Received event:',
@@ -10,7 +15,7 @@ exports.get_event = function(event, context) {
 
   var id = event.id;
   console.log('requesting data', id);
-  event.get(id,
+  event_client.get(id,
     function(data) {
       console.log('got data', data);
       context.succeed(data);
@@ -29,7 +34,7 @@ exports.update_event = function(event, context) {
 
   var id = event.id;
   console.log('setting data', id, event);
-  event.set(id, event,
+  event_client.set(id, event,
     function(data) {
       console.log('got response', data);
       context.succeed();
@@ -48,7 +53,7 @@ exports.create_event = function(event, context) {
 
   var id = event.id;
   console.log('setting data', id, event);
-  event.set(id, event,
+  event_client.set(id, event,
     function(data) {
       console.log('got response', data);
       context.succeed();
@@ -59,3 +64,16 @@ exports.create_event = function(event, context) {
     }
   );
 };
+
+exports.get_event_details = function(event, context) {
+  exports.get_event(
+    { id: event.id },
+    { succeed: function(event_data) {
+        context.succeed({
+          'version': '1',
+          'event': event_data,
+          'tasks': []
+        });
+    }}
+  );
+}

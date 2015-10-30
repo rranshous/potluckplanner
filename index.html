@@ -11,6 +11,7 @@
       <label>Start Time:
         <input type="text" name="start_time" value="{{event.start_time}}"></label>
       <input type="hidden" name="id" value="{{event.id}}"/>
+      <input type="submit"/>
     </form>
 
     <div id="tasks">
@@ -21,27 +22,50 @@
         <label>Description:
           <input type="text" name="description" value="{{description}}"/></label>
         <input type="hidden" name="id" value="{{id}}"/>
+        <input type="hidden" name="event_id" value="{{../event.id}}"/>
+        <input type="submit"/>
       </form>
       {{/each}}
     </div>
 
   </script>
   <script>
-    var hard_context = {
-      event: { name: 'e1', start_time: 'et1', id: '321', description: 'd1' },
-      tasks: [
-        { name: 't1', description: 'd1', id: '123' }
-      ]
+
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+          results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    function getEventDetails(callback) {
+      var data_host = "event/";
+      var event_id = getParameterByName("event");
+      console.log("event id", event_id);
+      var url = data_host + event_id;
+      console.log("making ajax request", url);
+      $.ajax(url)
+        .done(function(data) {
+          console.log("got data",data);
+          callback(data);
+        });
     };
 
-    function setupPage(context) {
-      var source   = $("#page_template").html();
-      var template = Handlebars.compile(source);
-      var html = template(context);
-      console.log("rendering html");
-      $("#content").html(html);
+    function setupPage() {
+      getEventDetails(function(event_details) {
+        if(event_details.error) {
+          $("content").html("ERROR: "+event_details.error);
+          return;
+        };
+        var source   = $("#page_template").html();
+        var template = Handlebars.compile(source);
+        var html = template(event_details);
+        console.log(event_details);
+        console.log("rendering html");
+        $("#content").html(html);
+      });
     };
-    $(window).load(function(){setupPage(hard_context);});
+    $(window).load(setupPage);
   </script>
 </head>
 <body>

@@ -7,6 +7,7 @@ var view_schema = {
   'id': 'NEW',
   'name': 'NEW',
   'description': 'NEW',
+  'event_id': 'NEW'
 };
 
 var hostname = "task-solecist.forebodingflavor.com";
